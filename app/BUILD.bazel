@@ -1,0 +1,15 @@
+# my_python_project/app/BUILD.bazel
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
+py_library(
+    name = "greeter_lib",
+    srcs = ["greeter.py"],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "main_app",
+    srcs = ["main.py"],
+    deps = [":greeter_lib"],
+    main = "main.py",
+)
