@@ -1,4 +1,5 @@
-# my_python_project/app/BUILD.bazel
+#bazel run //app:main_app
+#bazel clean
 load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 
 py_library(
