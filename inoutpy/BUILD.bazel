@@ -8,6 +8,8 @@
 #bazel build //inoutpy:all
 #bazel run   //inoutpy:my_build_tool
 #bazel clean
+#bazel run //inoutpy:my_build_tool -- inoutpy/my_input_file.txt inoutpy/my_output_file.txt 
+#above works on mac shell
 #bazel run //inoutpy:my_build_tool -- \
 #  $(bazel info workspace)/inoutpy/my_input_file.txt \
 #  $(bazel info workspace)/inoutpy/my_output_file.txt
