@@ -1,0 +1,22 @@
+#bazel run //app:main_app
+#bazel clean
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+load("//inout:my_custom_rule.bzl", "write_new_file")
+write_new_file( 
+         name = "write_my_custom_message_into_file",
+         my_input_file = "//inout:my_input_file.txt",
+         out_file_name = "my_awesome_output"
+         )
+
+py_library(
+    name = "greeter_lib",
+    srcs = ["greeter.py"],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "main_app",
+    srcs = ["main.py"],
+    deps = [":greeter_lib"],
+    main = "main.py",
+)

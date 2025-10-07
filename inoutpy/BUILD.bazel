@@ -1,0 +1,54 @@
+#bazel run //app:main_app
+#bazel build //app:all
+#bazel build //io:write_my_custom_message_into_file
+#bazel build //inout:all
+#bazel build //inout:write_my_custom_message_into_file
+#bazel build //inoutpy:write_my_custom_message_into_file
+#bazel build //inoutpy:write_something_else
+#bazel build //inoutpy:all
+#bazel run   //inoutpy:my_build_tool
+#bazel clean
+#bazel run //inoutpy:my_build_tool -- \
+#  $(bazel info workspace)/inoutpy/my_input_file.txt \
+#  $(bazel info workspace)/inoutpy/my_output_file.txt
+#  bazel run //inoutpy:my_build_tool -- C:\\cygwin64\\home\\mmahajan\\bazel_example\\inoutpy\\my_input_file.txt   C:\\cygwin64\\home\\mmahajan\\bazel_example\\inoutpy\\my_output_file.txt
+# use data in py_binary
+# bazel run //inoutpy:my_build_tool -- /cygdrive/c/cygwin64/home/mmahajan/bazel_example/inoutpy/my_input_file.txt /cygdrive/c/cygwin64/home/mmahajan/bazel_example/inoutpy/my_output_file.txt
+#bazel build //inoutpy:build_with_custom_tool
+#bazel build //inoutpy:build_with_custom_tool
+#bazel aquery //inoutpy:build_with_custom_tool
+
+load("@rules_python//python:defs.bzl", "py_binary")
+load("//inoutpy:my_custom_rule.bzl", "write_new_file", "write_new_file_with_custom_tool")
+
+write_new_file_with_custom_tool( 
+         name = "build_with_custom_tool",
+         my_input_file = "//inoutpy:my_input_file.txt",
+         out_file_name = "my_awesome_output",
+         my_custom_build_tool = "//inoutpy:my_build_tool",
+         )
+
+write_new_file( 
+         name = "write_my_custom_message_into_file",
+         my_input_file = "//inoutpy:my_input_file.txt",
+         out_file_name = "my_awesome_output"
+         )
+
+write_new_file( 
+         name = "write_something_else",
+         my_input_file = "//inoutpy:my_input_file.txt",
+         out_file_name = "something_else"
+         )
+
+py_library(
+    name = "greeter_lib",
+    srcs = ["greeter.py"],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "my_build_tool",
+    srcs = ["my_build_tool.py"],
+    data = ["my_input_file.txt"],
+    deps = [":greeter_lib", ],
+)
