@@ -3,6 +3,7 @@
 #brew install bazel  #on MAC
 #bazel clean --expunge
 #https://sourceforge.net/projects/bazel.mirror/postdownload
+#https://www.youtube.com/watch?v=toPWLiUq5Ps&t=2s
 load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 
 py_library(
