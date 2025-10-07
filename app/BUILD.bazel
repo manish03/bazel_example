@@ -1,5 +1,8 @@
 #bazel run //app:main_app
 #bazel clean
+#brew install bazel  #on MAC
+#bazel clean --expunge
+#https://sourceforge.net/projects/bazel.mirror/postdownload
 load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 
 py_library(
